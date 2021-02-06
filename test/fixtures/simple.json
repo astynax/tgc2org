@@ -1,0 +1,62 @@
+{
+    "name": "channel",
+    "type": "public_channel",
+    "id": 42,
+    "messages": [
+        {
+            "id": 1,
+            "type": "service",
+            "date": "2000-01-01T12:45:00",
+            "actor": "channel",
+            "actor_id": 101,
+            "action": "some_action",
+            "title": "channel",
+            "text": ""
+        },
+        {
+            "id": 2,
+            "type": "message",
+            "date": "2000-01-02T09:00:00",
+            "from": "robot",
+            "from_id": 103,
+            "photo": "foo/bar.png",
+            "text": [
+                "plain text",
+                {
+                    "type": "bold",
+                    "text": "accent"
+                },
+                {
+                    "type": "pre",
+                    "text": "preformatted",
+                    "language": "haskell"
+                },
+                {
+                    "type": "hashtag",
+                    "text": "#todo"
+                },
+                {
+                    "type": "italic",
+                    "text": "emphasis"
+                },
+                {
+                    "type": "link",
+                    "text": "https://haskell.org"
+                },
+                {
+                    "type": "mention",
+                    "text": "@robot"
+                },
+                {
+                    "type": "code",
+                    "text": "putStrLn"
+                },
+                {
+                    "type": "text_link",
+                    "text": "title",
+                    "href": "https://hackage.haskell.org"
+                }
+            ]
+        }
+    ]
+}

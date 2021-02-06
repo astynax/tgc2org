@@ -1,0 +1,54 @@
+cabal-version:       2.4
+name:                tgc2org
+version:             0.1.0.0
+synopsis:            Telegram channel to Org mode document converter
+homepage:            https://github.com/astynax/tgc2org
+license:             BSD-3-Clause
+license-file:        LICENSE
+author:              Aleksei Pirogov
+maintainer:          astynax@users.noreply.github.com
+copyright:           Aleksei Pirogov, 2021
+category:            Text
+extra-source-files:  CHANGELOG.md
+
+library
+  exposed-modules:     Lib
+                     , Lib.Types
+  build-depends:       base ^>=4.13.0.0
+                     , aeson
+                     , deriving-aeson
+                     , org-mode
+                     , bytestring
+                     , path
+                     , path-io
+                     , text
+                     , time
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Wincomplete-record-updates
+                       -Wincomplete-uni-patterns
+                       -Wredundant-constraints
+                       -Wmissing-exported-signatures
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+executable tgc2org
+  main-is:             Main.hs
+  build-depends:       base ^>=4.13.0.0
+                     , tgc2org
+                     , path
+  hs-source-dirs:      app
+  default-language:    Haskell2010
+
+test-suite tgc2org-test
+  default-language:    Haskell2010
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Suite.hs
+  build-depends:       base ^>=4.13.0.0
+                     , tgc2org
+                     , HUnit
+                     , aeson
+                     , bytestring
+                     , path
+                     , time
