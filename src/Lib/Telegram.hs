@@ -4,15 +4,16 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Lib.Types where
+module Lib.Telegram where
 
 import Control.Applicative
 import Control.Monad
 import Data.Foldable
+import Data.Maybe
 import GHC.Generics
 
 import Data.ByteString.Lazy.Char8 as BS
-import Data.Text
+import Data.Text as T
 import Data.Time
 import Data.Aeson
 import Data.Aeson.Types (Parser)
@@ -65,9 +66,9 @@ instance FromJSON MessageText where
       plainP   = withText "plain" (pure . CPlain)
       boldP    = withType "bold"    $ "text" `as` CBold
       italicP  = withType "italic"  $ "text" `as` CItalic
-      hashtagP = withType "hashtag" $ "text" `as` CHashtag
+      hashtagP = withType "hashtag" $ "text" `as` (CHashtag . without "#")
       linkP    = withType "link"    $ "text" `as` (CLink . Link)
-      mentionP = withType "mention" $ "text" `as` CMention
+      mentionP = withType "mention" $ "text" `as` (CMention . without "@")
       codeP    = withType "code"    $ "text" `as` CCode
       preP = withType "pre" $ \o -> CPre
         <$> o .:? "language"
@@ -75,18 +76,7 @@ instance FromJSON MessageText where
       textLinkP = withType "text_link" $ \o -> CTextLink
         <$> o .: "text"
         <*> (Link <$> o .: "href")
-
-withType :: String -> (Object -> Parser a) -> Value -> Parser a
-withType t f = withObject "Chunk" $ \o -> do
-  t' <- o .: "type"
-  guard $ t' == t
-  f o
-
-as :: Text -> (Text -> a) -> Object -> Parser a
-as n f o = f <$> o .: n
-
-failWith :: Value -> Parser a
-failWith = fail . BS.unpack . encode
+      without v t = fromMaybe t $ T.stripPrefix v t
 
 data Chunk
   = CPlain    !Text
@@ -112,3 +102,15 @@ instance FromJSON MessageType where
     String "service" -> pure MTService
     String "message" -> pure MTMessage
     v                -> failWith v
+
+withType :: String -> (Object -> Parser a) -> Value -> Parser a
+withType t f = withObject "Chunk" $ \o -> do
+  t' <- o .: "type"
+  guard $ t' == t
+  f o
+
+as :: Text -> (Text -> a) -> Object -> Parser a
+as n f o = f <$> o .: n
+
+failWith :: Value -> Parser a
+failWith = fail . BS.unpack . encode

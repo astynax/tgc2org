@@ -8,7 +8,7 @@ import Data.Aeson
 import Path.Posix
 import Test.HUnit
 
-import Lib.Types
+import Lib.Telegram
 
 main :: IO ()
 main = do
@@ -34,10 +34,10 @@ main = do
                    [ CPlain "plain text"
                    , CBold "accent"
                    , CPre (Just "haskell") "preformatted"
-                   , CHashtag "#todo"
+                   , CHashtag "todo"
                    , CItalic "emphasis"
                    , CLink (Link "https://haskell.org")
-                   , CMention "@robot"
+                   , CMention "robot"
                    , CCode "putStrLn"
                    , CTextLink "title" (Link "https://hackage.haskell.org")
                    ]
