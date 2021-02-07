@@ -1,8 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE OverloadedStrings #-}
 
 module Lib.Telegram where
 
@@ -81,7 +79,7 @@ instance FromJSON MessageText where
 data Chunk
   = CPlain    !Text
   | CBold     !Text
-  | CPre      !(Maybe String) !Text
+  | CPre      !(Maybe Text) !Text
   | CHashtag  !Text
   | CItalic   !Text
   | CLink     !Link

@@ -20,6 +20,10 @@ common basis
                        -Wincomplete-uni-patterns
                        -Wredundant-constraints
                        -Wmissing-exported-signatures
+  default-extensions:  OverloadedStrings
+                       LambdaCase
+                       TypeApplications
+                       ViewPatterns
 
 library
   import:              basis
@@ -30,6 +34,7 @@ library
                      , deriving-aeson
                      , org-mode
                      , bytestring
+                     , containers
                      , path
                      , path-io
                      , text
@@ -57,5 +62,6 @@ test-suite tgc2org-test
                      , HUnit
                      , aeson
                      , bytestring
+                     , org-mode
                      , path
                      , time
